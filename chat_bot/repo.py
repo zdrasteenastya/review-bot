@@ -21,8 +21,12 @@ class BotRepo():
         self.db_conn.close()
 
     def create_schedule(self, rows):
-        records_list_template = ','.join(['%s'] * len(rows))
-        self.cursor.execute(queries.insert_schedule.format(records_list_template), rows)
+        for row in rows:
+            self.cursor.execute(queries.insert_schedule.format(
+                rw_date=row[0],
+                username=row[1],
+                chat_id=row[2],
+            ))
         self.db_conn.commit()
 
     def delete_old_schedule(self):

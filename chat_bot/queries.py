@@ -1,6 +1,6 @@
 insert_schedule = """
     insert into schedule (rw_date, username, chat_id) 
-    values {} 
+    values (\'{rw_date}\', \'{username}\', {chat_id})
     on conflict
     do nothing;
 """
