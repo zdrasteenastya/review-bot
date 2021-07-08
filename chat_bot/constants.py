@@ -1,0 +1,9 @@
+REVIEWERS_COUNT = 2
+WEEKEND_DAYS = ['Saturday', 'Sunday']
+NUM_SCHEDULE_DATES = 14
+DAY_FOR_REVIEW = 2
+RWS = ['zdrateenastya_a', 'AShakurov_a', 'rkosarcov_a', 'nightingaleAlex_a']
+DATE_FORMAT = '%d %b'
+DAY_OF_WEEK = '%A'
+USERS_FILE = 'db/users.json'
+SCHEDULE_FILE = 'db/schedule.json'

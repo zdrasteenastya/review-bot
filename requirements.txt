@@ -1,0 +1,4 @@
+python-telegram-bot <14
+environs            <10
+click               <9
+ujson               <5

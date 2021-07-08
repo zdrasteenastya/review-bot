@@ -1,0 +1,1 @@
+drop schema tg_bot cascade;
