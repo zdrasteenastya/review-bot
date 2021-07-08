@@ -2,7 +2,7 @@ from settings.base import env
 
 
 class TgBotConfig(object):
-    TOKEN = env.str('TG_TOKEN', default='')
+    TOKEN = env.str('TG_TOKEN', default='1888295997:AAEjCbO7IERnA4u1BhXMa1GhocF3QwEX9XQ')
     WELCOME_MESSAGE = 'День добрый :)'
     TELEGRAM_SUPPORT_CHAT_ID = '-553795485'
     EVERY_DAY_TEXT = 'По МР сегодня: @{user_1} и @{user_2}'
