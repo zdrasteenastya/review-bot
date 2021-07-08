@@ -1,10 +1,6 @@
-import json
 import sqlite3
 
-import psycopg2
-
 from chat_bot import queries
-from chat_bot.constants import USERS_FILE, SCHEDULE_FILE
 from settings import DbConfig
 
 
