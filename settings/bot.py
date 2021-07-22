@@ -2,7 +2,7 @@ from settings.base import env
 
 
 class TgBotConfig(object):
-    TOKEN = env.str('TG_TOKEN', default='1888295997:AAEjCbO7IERnA4u1BhXMa1GhocF3QwEX9XQ')
+    TOKEN = env.str('TG_TOKEN', default='')
     CHAT_ID_FOR_WORKERS = '-440211705'
     WELCOME_MESSAGE = 'День добрый :)'
     EVERY_DAY_TEXT = 'По МР сегодня: @{user_1} и @{user_2}'
