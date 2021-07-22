@@ -69,3 +69,41 @@ def get_reviewers(chat_id, context):
             )
         else:
             return reviewers
+
+
+def set_reviewers(chat_id, context):
+    reviewers = get_reviewers(chat_id, context)
+
+    text_schedule = generate_schedule(
+        reviewers,
+        chat_id=chat_id,
+    )
+
+    sended_msg = context.bot.send_message(
+        chat_id=chat_id,
+        text=text_schedule,
+    )
+    context.bot.pin_chat_message(
+        chat_id=chat_id,
+        message_id=sended_msg.message_id,
+    )
+
+
+def get_reviewers_list(context, chat_id):
+    with BotRepo() as bot_repo:
+        today = datetime.now().strftime(DATE_FORMAT)
+        try:
+            users = bot_repo.get_reviewers(date=today, chat_id=chat_id)
+            usernames = [user[0] for user in users]
+            context.bot.send_message(
+                chat_id=chat_id,
+                text=TgBotConfig.EVERY_DAY_TEXT.format(
+                    user_1=usernames[0],
+                    user_2=usernames[1]
+                ),
+            )
+        except IndexError:
+            context.bot.send_message(
+                chat_id=chat_id,
+                text=TgBotConfig.EMPTY_SCHEDULE
+            )

@@ -4,9 +4,8 @@ from telegram.ext import CommandHandler, MessageHandler, Filters
 
 from chat_bot.constants import DATE_FORMAT
 from chat_bot.repo import BotRepo
-    # FileRepo
 from settings.bot import TgBotConfig
-from helpers.utils import generate_schedule, get_reviewers
+from helpers.utils import set_reviewers, get_reviewers_list
 
 
 def start(update, _):
@@ -22,20 +21,7 @@ def schedule(update, context):
             text=TgBotConfig.PRIVATE_CHAT,
         )
     else:
-        reviewers = get_reviewers(chat_id, context)
-        text_schedule = generate_schedule(
-            reviewers,
-            chat_id=chat_id,
-        )
-
-        sended_msg = context.bot.send_message(
-            chat_id=chat_id,
-            text=text_schedule,
-        )
-        context.bot.pin_chat_message(
-            chat_id=chat_id,
-            message_id=sended_msg.message_id,
-        )
+        set_reviewers(chat_id, context)
 
 
 def today(update, context):
@@ -48,23 +34,7 @@ def today(update, context):
         )
 
     else:
-        with BotRepo() as bot_repo:
-            today = datetime.now().strftime(DATE_FORMAT)
-            try:
-                users = bot_repo.get_reviewers(date=today, chat_id=chat_id)
-                usernames = [user[0] for user in users]
-                context.bot.send_message(
-                    chat_id=chat_id,
-                    text=TgBotConfig.EVERY_DAY_TEXT.format(
-                        user_1=usernames[0],
-                        user_2=usernames[1]
-                    ),
-                )
-            except IndexError:
-                context.bot.send_message(
-                    chat_id=chat_id,
-                    text=TgBotConfig.EMPTY_SCHEDULE
-                )
+        get_reviewers_list(context, chat_id)
 
 
 def add_me(update, context):
@@ -91,6 +61,8 @@ def add_me(update, context):
                 ),
             )
 
+            set_reviewers(chat_id, context)
+
 
 def stop_me(update, context):
     chat_id = update.effective_chat.id
@@ -115,21 +87,7 @@ def stop_me(update, context):
                 ),
             )
 
-        reviewers = get_reviewers(chat_id, context)
-
-        text_schedule = generate_schedule(
-            reviewers,
-            chat_id=chat_id,
-        )
-
-        sended_msg = context.bot.send_message(
-            chat_id=chat_id,
-            text=text_schedule,
-        )
-        context.bot.pin_chat_message(
-            chat_id=chat_id,
-            message_id=sended_msg.message_id,
-        )
+        set_reviewers(chat_id, context)
 
 
 def help(update, context):
