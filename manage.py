@@ -32,7 +32,7 @@ def start():
 
     j = updater.job_queue
     j.run_daily(worker_schedule, days=(0, 1, 2, 3, 4), time=datetime.time(hour=6, minute=00, second=00))
-    j.run_daily(worker_today, days=(0, 1, 2, 3, 4), time=datetime.time(hour=6, minute=01, second=00))
+    j.run_daily(worker_today, days=(0, 1, 2, 3, 4), time=datetime.time(hour=6, minute=00, second=20))
 
     updater.start_polling()
     updater.idle()
